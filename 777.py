@@ -39,7 +39,16 @@ def registration():
     text_password2.pack()
     registr_password2.pack()
     button_registr.pack()
-
+    
+    r = requests.post('https://localhost:44397/user/register', json={
+                " FirstName": fn,
+                "LastName": ln,
+                "Login": lodin,
+                "Password": password,
+                "Role": role,
+                "Email": email
+                },verify = False)
+    
     def save():
         login_pass_save = {}
         login_pass_save[registr_lodin.get()]=registr_password1.get()
@@ -62,6 +71,7 @@ def login():
     text_enter_pass.pack()
     enter_password.pack()
     button_enter.pack()
+    
 
     def log_pass():
         f = open("login.txt", "rb")
@@ -74,6 +84,11 @@ def login():
                 messagebox.showerror("Ошибка", "Вы ввели неверный логи или пароль")
         else:
             messagebox.showerror("Ошибка!", "Неверный логин!")
+         
+    r = requests.post('https://localhost:44397/user/authenticate', json={
+                "Login": lodin,
+                "Password": password,
+                },verify = False)
 
 registration()
 
